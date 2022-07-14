@@ -48,7 +48,13 @@ function Dashboard() {
   }, []);
 
   const PageMessages = React.useCallback(() => {
-    navigate("/messages")
+    window.FB.api(
+      `/${page-id}/feed
+      ?access_token=${page-access-token}`,
+      (response) => console.log(response)
+    );
+    104964737747276
+    // navigate("/messages")
   }, []);
 
 
