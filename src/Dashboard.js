@@ -17,6 +17,7 @@ function Dashboard() {
   const logInToFB = React.useCallback(() => {
     window.FB.login((response) => {
       setFbUserAccessToken(response.authResponse.accessToken);
+      pagetoken();
       console.log(fbUserAccessToken,response)
       const userid = response.authResponse.userID
       window.FB.api(`${userid}`,function(response) {
@@ -30,14 +31,17 @@ function Dashboard() {
     if (user) navigate("/dashboard");
   }, [user, loading]);
 
-  useEffect(() => {
+  const pagetoken = () =>{
     if (fbUserAccessToken) {
       window.FB.api(
         `/${PAGE_ID}?fields=access_token&access_token=${fbUserAccessToken}`,
-        ({ access_token }) => setFbPageAccessToken(access_token)
+        ({access_token}) =>{
+          navigate("/messages",{ state:{page_id:PAGE_ID,page_token:access_token} })
+        }
       );
     }
-  }, [fbUserAccessToken]);
+  }
+
 
 
   const logOutOfFB = React.useCallback(() => {
@@ -48,13 +52,10 @@ function Dashboard() {
   }, []);
 
   const PageMessages = React.useCallback(() => {
-    window.FB.api(
-      `/${page-id}/feed
-      ?access_token=${page-access-token}`,
-      (response) => console.log(response)
-    );
-    104964737747276
-    // navigate("/messages")
+    if(fbPageAccessToken){
+    }else{
+      pagetoken();
+    }
   }, []);
 
 
@@ -96,7 +97,7 @@ function Dashboard() {
       
       Delete Integration
     </button>
-    <button className="dashboard__btn" style={{backgroundColor:'#03203C'}} onClick={PageMessages}>
+    <button className="dashboard__btn" style={{backgroundColor:'#03203C'}} onClick={pagetoken}>
       Reply to Messages 
     </button>
   </div>

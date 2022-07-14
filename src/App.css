@@ -5,7 +5,7 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.app {
+.conversation {
     display: flex;
     min-height: 100vh;
     max-height: 100vh;
@@ -99,6 +99,11 @@ main header {
     font-weight: normal;
 }
 .avatar-component {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.leftside{
     display: flex;
     align-items: center;
 }
